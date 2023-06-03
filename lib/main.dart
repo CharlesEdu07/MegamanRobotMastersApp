@@ -41,6 +41,7 @@ class MyHomePage extends HookWidget {
   Widget build(BuildContext context) {
     useEffect(() {
       service.loadRobotMaster();
+      return null;
     }, []);
 
     final selectedIndex = useState(0);
