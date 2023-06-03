@@ -87,6 +87,7 @@ class MyHomePage extends HookWidget {
                     return ListFavorites(
                       jsonObjects: value['dataObjects'],
                       propertyNames: value['propertyNames'],
+                      service: service,
                     );
                   },
                 )
