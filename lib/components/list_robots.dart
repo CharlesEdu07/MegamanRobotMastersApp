@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import '../services/service.dart';
 
-class ListRobots extends StatelessWidget {
+class ListRobots extends HookWidget {
   final List jsonObjects;
   final List<String> columnNames;
   final List<String> propertyNames;
+  final Service service;
 
   const ListRobots({
     super.key,
@@ -16,6 +19,7 @@ class ListRobots extends StatelessWidget {
       "weakness",
       "series"
     ],
+    required this.service,
   });
 
   @override
@@ -66,13 +70,28 @@ class ListRobots extends StatelessWidget {
                         Row(
                           children: <Widget>[
                             Center(
-                              child: IconButton(
-                                  onPressed: () => {},
-                                  icon: const Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                    size: 18,
-                                  )),
+                              child: ValueListenableBuilder(
+                                  valueListenable:
+                                      service.favoritesStateNotifier,
+                                  builder: (_, value, __) {
+                                    return IconButton(
+                                      icon: Icon(
+                                        Icons.favorite,
+                                        color: value['dataObjects']
+                                                .contains(jsonObjects[index])
+                                            ? Colors.red
+                                            : Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        value['dataObjects']
+                                                .contains(jsonObjects[index])
+                                            ? value['dataObjects']
+                                                .remove(jsonObjects[index])
+                                            : value['dataObjects']
+                                                .add(jsonObjects[index]);
+                                      },
+                                    );
+                                  }),
                             ),
                           ],
                         )

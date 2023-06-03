@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:projetinho/components/list_favorites.dart';
 import 'package:projetinho/services/service.dart';
 import './layouts/navbar.dart';
 import './layouts/my_bottom_navbar..dart';
-import './components/start_screen.dart';
 import './components/list_robots.dart';
 
 final service = Service();
@@ -39,6 +39,12 @@ class MyHomePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      service.loadRobotMaster();
+    }, []);
+
+    final selectedIndex = useState(0);
+
     return Scaffold(
       appBar: AppBar(
         leading: Container(
@@ -49,47 +55,44 @@ class MyHomePage extends HookWidget {
           Navbar(),
         ],
       ),
-      body: ValueListenableBuilder(
-          valueListenable: service.cardStateNotifier,
-          builder: (_, value, __) {
-            switch (value['status']) {
-              case ConnectionStatus.idle:
-                return const StartScreen();
-              case ConnectionStatus.loading:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              case ConnectionStatus.ready:
+      body: selectedIndex.value == 0
+          ? ValueListenableBuilder(
+              valueListenable: service.cardStateNotifier,
+              builder: (_, value, __) {
+                if (value['status'] == ConnectionStatus.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (value['status'] == ConnectionStatus.error) {
+                  return const Center(
+                    child: Text('Erro ao carregar os dados'),
+                  );
+                }
+
                 return ListRobots(
                   jsonObjects: value['dataObjects'],
                   columnNames: value['columnNames'],
                   propertyNames: value['propertyNames'],
+                  service: service,
                 );
-              case ConnectionStatus.error:
-                return const Center(
-                  child: Text(
-                    'Sem conexão com a internet',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                );
-
-              default:
-                return const Center(
-                  child: Text(
-                    'Erro desconhecido',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                );
-            }
-          }),
-      bottomNavigationBar:
-          MyBottomNavBar(itemSelectedCallback: (index) => service.load(index)),
+              },
+            )
+          : selectedIndex.value == 1
+              ? ValueListenableBuilder(
+                  valueListenable: service.favoritesStateNotifier,
+                  builder: (_, value, __) {
+                    return ListFavorites(
+                      jsonObjects: value['dataObjects'],
+                      propertyNames: value['propertyNames'],
+                    );
+                  },
+                )
+              : Container(),
+      bottomNavigationBar: MyBottomNavBar(itemSelectedCallback: (index) {
+        selectedIndex.value = index;
+      }),
     );
   }
 }

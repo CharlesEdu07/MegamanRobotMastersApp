@@ -3,30 +3,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './connection_service.dart';
 
-enum ConnectionStatus { idle, loading, ready, error }
+enum ConnectionStatus { loading, ready, error }
 
 class Service {
   final ValueNotifier<Map<String, dynamic>> cardStateNotifier = ValueNotifier({
-    'status': ConnectionStatus.idle,
+    'status': ConnectionStatus.loading,
     'dataObjects': [],
     'columnNames': [],
   });
 
-  final ValueNotifier<Map<dynamic, dynamic>> favoritesStateNotifier =
+  final ValueNotifier<Map<String, dynamic>> favoritesStateNotifier =
       ValueNotifier({
-    'status': ConnectionStatus.idle,
+    'status': ConnectionStatus.ready,
     'dataObjects': [],
-    'columnNames': [],
+    'propertyNames': ['name', 'weapon', 'avatar', 'weakness', 'series'],
   });
 
-  Future<void> load(index) async {
-    List<Function> functions = [loadRobotMaster];
-
-    cardStateNotifier.value = {
-      'status': ConnectionStatus.loading,
-      'dataObjects': []
-    };
-
+  Future<void> loadRobotMaster() async {
     bool isConected = await ConnectionService().isConected();
 
     if (!isConected) {
@@ -37,12 +30,6 @@ class Service {
 
       return;
     }
-
-    functions[index]();
-  }
-
-  Future<void> loadRobotMaster() async {
-    print("Dudu");
 
     var robotsUri = Uri(
       scheme: 'https',
