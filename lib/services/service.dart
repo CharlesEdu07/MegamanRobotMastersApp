@@ -43,13 +43,7 @@ class Service {
     cardStateNotifier.value = {
       'status': ConnectionStatus.ready,
       'dataObjects': robotsJson,
-      'columnNames': [
-        "Nome",
-        "Arma",
-        "Sprite",
-        "Avatar",
-        "Jogo"
-      ], // Atualize esta linha
+      'columnNames': ["Nome", "Arma", "Sprite", "Avatar", "Jogo"],
       'propertyNames': ["name", "weapon", "sprite1", "avatar", "series"]
     };
   }
