@@ -1,7 +1,7 @@
 import 'dart:io';
 
 class ConnectionService {
-  Future<bool> isConected() async {
+  Future<bool> isConnected() async {
     try {
       final result = await InternetAddress.lookup('google.com');
 

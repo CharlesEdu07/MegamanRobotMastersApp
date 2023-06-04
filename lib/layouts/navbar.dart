@@ -5,19 +5,34 @@ class Navbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
-        itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 1,
-                child: Text("Carregar Robôs"),
-              ),
-              const PopupMenuItem(
-                value: 2,
-                child: Text("Carregar Favoritos"),
-              ),
-            ],
-        onSelected: (value) {
-          {}
-        });
+    return Row(
+      children: [
+        const SizedBox(width: 20),
+        TextButton(
+          onPressed: () {},
+          child: const Text(
+            "Jogo",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        const SizedBox(width: 20),
+        TextButton(
+          onPressed: () {},
+          child: const Text(
+            "Quantidade",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        const SizedBox(width: 20),
+        TextButton(
+          onPressed: () {},
+          child: const Text(
+            "Nome",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        const SizedBox(width: 20),
+      ],
+    );
   }
 }

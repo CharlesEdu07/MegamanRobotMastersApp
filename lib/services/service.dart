@@ -20,9 +20,9 @@ class Service {
   });
 
   Future<void> loadRobotMaster() async {
-    bool isConected = await ConnectionService().isConected();
+    bool isConnected = await ConnectionService().isConnected();
 
-    if (!isConected) {
+    if (!isConnected) {
       cardStateNotifier.value = {
         'status': ConnectionStatus.error,
         'dataObjects': []
