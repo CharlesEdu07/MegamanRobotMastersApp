@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import './connection_service.dart';
 
 enum ConnectionStatus { loading, ready, error }
 
@@ -20,20 +19,10 @@ class Service {
   });
 
   Future<void> loadRobotMaster() async {
-    bool isConnected = await ConnectionService().isConnected();
-
-    if (!isConnected) {
-      cardStateNotifier.value = {
-        'status': ConnectionStatus.error,
-        'dataObjects': []
-      };
-
-      return;
-    }
-
     var robotsUri = Uri(
-      scheme: 'https',
-      host: 'megaman-api.herokuapp.com',
+      scheme: 'http',
+      host: 'localhost',
+      port: 8000,
       path: '/',
     );
 
