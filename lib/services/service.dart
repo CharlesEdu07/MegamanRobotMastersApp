@@ -21,9 +21,9 @@ class Service {
   Future<void> loadRobotMaster() async {
     var robotsUri = Uri(
       scheme: 'http',
-      host: 'localhost',
-      port: 8000,
-      path: '/',
+      host: '10.0.2.2',
+      port: 8080,
+      path: '/robotmasters',
     );
 
     var jsonString = await http.read(robotsUri);
@@ -33,7 +33,7 @@ class Service {
       'status': ConnectionStatus.ready,
       'dataObjects': robotsJson,
       'columnNames': ["Nome", "Arma", "Sprite", "Avatar", "Jogo"],
-      'propertyNames': ["name", "weapon", "sprite1", "avatar", "series"]
+      'propertyNames': ["name", "weapon", "sprite", "avatar", "series"]
     };
   }
 }
