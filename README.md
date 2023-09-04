@@ -1,16 +1,7 @@
-# projetinho
+# Flutter API Consumption Example
 
-A new Flutter project.
+Este é um projeto Flutter simples que consome uma API do repositório [MegamanAPI](https://github.com/CharlesEdu07/MegamanAPI.git). Ele demonstra como fazer chamadas HTTP para a API para obter dados e exibi-los em um aplicativo Flutter.
 
-## Getting Started
+## Configuração do Ambiente
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Certifique-se de ter o Flutter instalado em seu sistema. Você pode seguir as [instruções de instalação](https://flutter.dev/docs/get-started/install) no site oficial do Flutter.
